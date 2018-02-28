@@ -1,0 +1,17 @@
+<ion-content padding>
+    <ion-grid>
+  
+      <ion-row id="top">
+        <ion-col col-4>
+          <p [innerHTML]="data.getSessionDataAsHtml()"></p>
+        </ion-col>
+        <ion-col col-8 text-center>
+          <h1>{{'END.WELL_DONE' | translate}}</h1>
+          <br>
+          <button ion-button large (click)="next()">{{'END.PLAY_AGAIN' | translate}}</button>
+        </ion-col>
+      </ion-row>
+  
+    </ion-grid>
+  </ion-content>
+  

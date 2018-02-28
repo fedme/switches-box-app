@@ -11,9 +11,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
-import { RegistrationPage } from '../pages/registration/registration';
 
-import { Api, Utils, Data, Stimuli } from '../providers/providers';
+import { Api, Utils, Data, Stimuli, Box } from '../providers/providers';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -24,8 +23,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    MyApp,
-    RegistrationPage
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -45,8 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    RegistrationPage
+    MyApp
   ],
   providers: [
     StatusBar,
@@ -57,7 +54,8 @@ export function createTranslateLoader(http: HttpClient) {
     Api, 
     Utils, 
     Data, 
-    Stimuli
+    Stimuli,
+    Box
   ]
 })
 export class AppModule {}

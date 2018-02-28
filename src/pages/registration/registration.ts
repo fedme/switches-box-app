@@ -30,7 +30,7 @@ export class RegistrationPage {
 
   handleRegistration() {
     if (this.validateRegistration()) {
-      this.navCtrl.setRoot('TrainingInstructionsPage'); // always use setRoot instead of push
+      this.navCtrl.setRoot('BoxCheckPage'); // always use setRoot instead of push
     }
   }
 

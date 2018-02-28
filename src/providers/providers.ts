@@ -2,10 +2,12 @@ import { Api } from './api/api';
 import { Utils } from './utils/utils';
 import { Data } from './data/data';
 import { Stimuli } from './stimuli/stimuli';
+import { Box } from './box/box';
 
 export {
     Api,
     Utils,
     Data,
-    Stimuli 
+    Stimuli,
+    Box 
 };

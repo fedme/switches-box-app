@@ -9,16 +9,17 @@ import { Stimuli, Box } from '../../providers/providers';
 })
 export class BoxCheckPage {
 
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private stimuli: Stimuli, private box: Box) {
+
+      
+
   }
 
   ionViewDidLoad() {
-    this.box.initialize();
-
-    this.box.onSwitchChanged().subscribe((switchObj) => {
-      console.log('onSwitchChanged', switchObj);
-    });
+    
   }
   
 

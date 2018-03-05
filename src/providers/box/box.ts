@@ -2,37 +2,53 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Api } from '../api/api';
-import * as socketIo from 'socket.io-client';
-
-const SERVER_URL = 'http://192.168.0.10:3000';
+import { SocketService } from '../socket/socket';
 
 @Injectable()
 export class Box {
 
+    switches: Map<string, boolean>;
 
-  data: Map<string, any>;
-  private socket: any;
+    constructor(private api: Api, private socketService: SocketService) {
+        console.log('Hello Box Provider');
 
-  constructor(private api: Api) {
-      console.log('Hello Box Provider');
-  }
+        this.switches = new Map();
+        this.switches.set('switch_1', false);
+        this.switches.set('switch_2', false);
+        this.switches.set('switch_3', false);
+        this.switches.set('switch_4', false);
+        this.switches.set('switch_5', false);
+        this.switches.set('switch_6', false);
+        this.switches.set('switch_activate', false);
 
-  initialize() {
-    this.initSocket();
-  }
+        this.socketService.initialize();
 
-  public initSocket(): void {
-      this.socket = socketIo(SERVER_URL);
-  }
+        this.socketService.onSwitchChanged().subscribe((switchObj) => {
 
-  public setLED(LED: any): void {
-      this.socket.emit('setLED', LED);
-  }
+            this.switches.set(switchObj.id, switchObj.val);
+            console.log('onSwitchChanged', switchObj);
 
-  public onSwitchChanged(): Observable<any> {
-      return new Observable<any>(observer => {
-          this.socket.on('switchChanged', (data: any) => observer.next(data));
-      });
-  }
-  
+            if (switchObj.id === "switch_activate" && switchObj.val == 1) {
+                this.onBoxActivated();
+            }
+            else if (switchObj.id === "switch_activate" && switchObj.val == 0) {
+                this.onBoxDeactivated();
+            }
+
+        });
+
+    }
+
+    onBoxActivated() {
+        console.log("onBoxActivated()");
+    }
+
+    onBoxDeactivated() {
+        console.log("onBoxDeactivated()");
+    }
+
+    initialize() {
+
+    }
+
 }

@@ -15,4 +15,43 @@
 
 <ion-content padding>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-list>
+          <ion-item>
+            <ion-label>Switch 1</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_1')" (ngModelChange)="box.switches.set('switch_1', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch 2</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_2')" (ngModelChange)="box.switches.set('switch_2', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch 3</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_3')" (ngModelChange)="box.switches.set('switch_3', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch 4</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_4')" (ngModelChange)="box.switches.set('switch_4', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch 5</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_5')" (ngModelChange)="box.switches.set('switch_5', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch 6</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_6')" (ngModelChange)="box.switches.set('switch_6', $event)"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Switch ACTIVATE</ion-label>
+            <ion-toggle [ngModel]="box.switches.get('switch_activate')" (ngModelChange)="box.switches.set('switch_activate', $event)"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col text-center></ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>

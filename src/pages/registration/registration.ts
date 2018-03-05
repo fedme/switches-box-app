@@ -15,7 +15,7 @@ export class RegistrationPage {
     private stimuli: Stimuli, private data: Data, private toastCtrl: ToastController) {
       
       // Initialize providers
-      this.stimuli.initialize();
+      this.stimuli.onBeforeRegistration();
       this.data.initialize();
 
   }
@@ -24,6 +24,7 @@ export class RegistrationPage {
     console.log('ionViewDidLoad RegistrationPage');
     if (this.parseUrlParams()) {
       console.log("participant:", this.stimuli.participant);
+      this.stimuli.onAfterRegistration();
       this.navCtrl.setRoot('ConsentFormPage'); // always use setRoot instead of push
     }
   }

@@ -21,11 +21,13 @@ export class Stimuli {
     this.runInBrowser = this.platform.is('core') || this.platform.is('mobileweb');
   }
 
-  initialize() {
-    this.initialTimestamp = Date.now();
+  onBeforeRegistration() {
     this.participant = new Participant("anonymous-" + this.utils.getCounterValue());
-    this.pickCondition();
-    
+  }
+
+  onAfterRegistration() {
+    this.initialTimestamp = Date.now();
+    this.pickCondition();  
     this.currentTestIndex = -1;
   }
 

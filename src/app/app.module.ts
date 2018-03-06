@@ -12,7 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { MyApp } from './app.component';
 
-import { Api, Utils, Data, Stimuli, SocketService, Box } from '../providers/providers';
+import { Api, Utils, Data, Stimuli, SocketService, BoxProvider } from '../providers/providers';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -56,7 +56,7 @@ export function createTranslateLoader(http: HttpClient) {
     Data, 
     Stimuli,
     SocketService,
-    Box
+    BoxProvider
   ]
 })
 export class AppModule {}

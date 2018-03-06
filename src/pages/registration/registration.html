@@ -14,13 +14,17 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
 
   <ion-grid>
     <ion-row>
-      <ion-col></ion-col>
-      <ion-col col-6 text-center>
+
+      <ion-col text-center>
+        <box></box>
+      </ion-col>
+
+      <ion-col text-center>
+
         <div class="content-wrapper">
           <h1 translate [translateParams]="">REGISTRATION.TITLE</h1>
           <form>
@@ -47,17 +51,16 @@
             </ion-list>
           </form>
         </div>
+
+        <br><br>
+
+        <button ion-button large (click)="handleRegistration()">{{'REGISTRATION.SUBMIT' | translate}}</button>
+
       </ion-col>
-      <ion-col></ion-col>
+
     </ion-row>
 
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col text-center>
-        <button ion-button large (click)="handleRegistration()">{{'REGISTRATION.SUBMIT' | translate}}</button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
+
   </ion-grid>
 
 

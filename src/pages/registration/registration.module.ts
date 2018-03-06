@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { RegistrationPage } from './registration';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
     RegistrationPage,
   ],
   imports: [
+    ComponentsModule,
     IonicPageModule.forChild(RegistrationPage),
     TranslateModule.forChild()
   ],

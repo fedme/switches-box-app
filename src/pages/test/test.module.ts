@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { BoxCheckPage } from './box-check';
+import { TestPage } from './test';
 import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
-    BoxCheckPage,
+    TestPage,
   ],
   imports: [
     ComponentsModule,
-    IonicPageModule.forChild(BoxCheckPage),
+    IonicPageModule.forChild(TestPage),
     TranslateModule.forChild()
   ],
 })

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>iSearch SWITCHES-BOX</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+
+        <box></box>
+
+      </ion-col>
+      <ion-col>
+
+        <h1>Test stats</h1>
+
+        <ion-list>
+          <ion-item>
+            Condition
+            <ion-badge item-end>{{stimuli.condition}}</ion-badge>
+          </ion-item>
+          <ion-item>
+            Condition switch
+            <ion-badge item-end>{{stimuli.conditionSwitchId}}</ion-badge>
+          </ion-item>
+          <ion-item>
+            Trials
+            <ion-badge item-end>{{stimuli.trials.length}}</ion-badge>
+          </ion-item>
+          <ion-item>
+            Guesses
+            <ion-badge item-end>{{stimuli.guesses.length}}</ion-badge>
+          </ion-item>
+        </ion-list>
+
+        <h1>Make a guess</h1>
+        <div *ngIf="!outOfGuesses">
+          <ion-list>
+            <ion-item>
+              <ion-label>Select a switch from the menu:</ion-label>
+              <ion-select [(ngModel)]="guessedSwitchId">
+                <ion-option value="switch_1">switch_1</ion-option>
+                <ion-option value="switch_2">switch_2</ion-option>
+                <ion-option value="switch_3">switch_3</ion-option>
+                <ion-option value="switch_4">switch_4</ion-option>
+                <ion-option value="switch_5">switch_5</ion-option>
+                <ion-option value="switch_6">switch_6</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+
+          <button ion-button *ngIf="!need2ConfirmGuess" color="dark" (click)="wantToLogGuess()">Click to guess switch</button>
+          <button ion-button *ngIf="need2ConfirmGuess" color="secondary" (click)="logGuess()">Click again to confirm</button>
+        </div>
+
+        <div *ngIf="outOfGuesses">
+          <p>You have already guessed the correct switch! End the game!</p>
+        </div>
+
+        <h1>End the game</h1>
+        <button ion-button *ngIf="!need2ConfirmEnd" color="danger" (click)="wantToEndGame()">End the game and save data</button>
+        <button ion-button *ngIf="need2ConfirmEnd" color="secondary" (click)="endGame()">Click again to confirm</button>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

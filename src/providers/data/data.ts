@@ -54,7 +54,7 @@ export class Data {
 
   serializeStimuliData() {
     // calculate exp duration
-    const duration = Math.floor((Date.now() - this.stimuli.initialTimestamp) / 1000);
+    const duration = Math.floor((Date.now() - this.stimuli.initialTimestamp));
 
     // build date and time strings
     const currentdate = new Date();
@@ -62,7 +62,7 @@ export class Data {
     const month = ("0" + (currentdate.getMonth() + 1)).slice(-2);
     const year = currentdate.getFullYear();
     const dateString = day + "/" + month + "/" + year;
-    const timeString = currentdate.getHours().toFixed(2) + ":" + currentdate.getMinutes().toFixed(2);
+    const timeString = currentdate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
     // data map
     let data = new Map();
@@ -75,12 +75,21 @@ export class Data {
     data.set("participant_grade", this.stimuli.participant.grade);
 
     // save session data
+    data.set("initial_timestamp", this.stimuli.initialTimestamp);
     data.set("session_date", dateString);
     data.set("session_time", timeString);
-    data.set("session_duration_seconds", duration);
+    data.set("session_duration", duration);
 
     // save conditions data
-    data.set("condition_index", this.stimuli.conditionIndex);
+    data.set("condition", this.stimuli.condition);
+    data.set("conditionId", this.stimuli.conditionIndex);
+    data.set("conditionSwitchId", this.stimuli.conditionSwitchId);
+
+    // save experiment data
+    data.set("n_trials", this.stimuli.trials.length);
+    data.set("n_guesses", this.stimuli.guesses.length);
+    data.set("trials", this.stimuli.trials);
+    data.set("guesses", this.stimuli.guesses);
 
     this.data = data;
 
@@ -98,13 +107,23 @@ export class Data {
     return out;
   }
 
+  exportRecordsAsJSON() {
+    this.storageGetAll()
+      .then(records => {
+        console.log("records:");
+        console.log(records);
+        let fileContent = JSON.stringify(records);
+        this.saveOutputFile(fileContent, "json");
+      });
+  }
+
   exportRecordsAsCsv() {
     this.storageGetAll()
       .then(records => {
         console.log("records:");
         console.log(records);
         let csvContent = this.fromRecordsToCsv(records);
-        this.saveCsvFile(csvContent);
+        this.saveOutputFile(csvContent);
       });
   }
 
@@ -144,13 +163,13 @@ export class Data {
   }
 
 
-  saveCsvFile(csvContent) {
+  saveOutputFile(csvContent, fileExt = "csv") {
     // build file name
     let currentdate = new Date();
     let day = ("0" + currentdate.getDate()).slice(-2);
     let month = ("0" + (currentdate.getMonth() + 1)).slice(-2);
     let filename = "data-" + day + month + currentdate.getFullYear() + "-"
-      + currentdate.getHours() + currentdate.getMinutes() + ".csv";
+      + currentdate.getHours() + currentdate.getMinutes() + "." + fileExt;
 
     // access file system
     this.filesystem.resolveDirectoryUrl(this.filesystem.externalDataDirectory)

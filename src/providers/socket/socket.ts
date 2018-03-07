@@ -25,8 +25,8 @@ export class SocketService {
         this.socket = socketIo(SERVER_URL);
     }
 
-    public setLED(LED: any): void {
-        this.socket.emit('setLED', LED);
+    public emitEvent(eventName: string, data: any): void {
+        this.socket.emit(eventName, data);
     }
 
     public getSwitchesVals(): void {

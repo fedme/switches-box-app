@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { Stimuli, Data } from '../../providers/providers';
+import { Stimuli, Data, BoxProvider } from '../../providers/providers';
 
 @IonicPage({
   priority: 'high'
@@ -12,7 +12,7 @@ import { Stimuli, Data } from '../../providers/providers';
 export class RegistrationPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private stimuli: Stimuli, private data: Data, private toastCtrl: ToastController) {
+    private stimuli: Stimuli, private data: Data, private toastCtrl: ToastController, private box: BoxProvider) {
       
       // Initialize providers
       this.stimuli.onBeforeRegistration();
@@ -22,6 +22,9 @@ export class RegistrationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistrationPage');
+
+    this.box.startFlowingLeds();
+
     if (this.parseUrlParams()) {
       console.log("participant:", this.stimuli.participant);
       this.stimuli.onAfterRegistration();
@@ -31,7 +34,8 @@ export class RegistrationPage {
 
   handleRegistration() {
     if (this.validateRegistration()) {
-      this.navCtrl.setRoot('BoxCheckPage'); // always use setRoot instead of push
+      this.stimuli.onAfterRegistration();
+      this.navCtrl.setRoot('TestPage'); // always use setRoot instead of push
     }
   }
 

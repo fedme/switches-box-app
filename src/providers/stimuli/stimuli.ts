@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Utils } from '../utils/utils';
 import { Participant } from '../../models/participant';
-import { CONDITIONS } from './constants';
+import { CONDITIONS, SWITCHES_IDS } from './constants';
 
 @Injectable()
 export class Stimuli {
 
+  condition: string;
+  conditionSwitchId: string;
   conditionIndex: number;
+
   initialTimestamp: number;
   participant: Participant;
   conditionCounterOverride: number = null;
-  currentTestIndex: number = -1;
   runInBrowser: boolean = false;
-  
+
+  trials: any[] = [];
+  guesses: any[] = [];
 
   constructor(private utils: Utils, private platform: Platform) {
     console.log('Hello Stimuli Provider');
@@ -27,8 +31,9 @@ export class Stimuli {
 
   onAfterRegistration() {
     this.initialTimestamp = Date.now();
-    this.pickCondition();  
-    this.currentTestIndex = -1;
+    this.trials = [];
+    this.guesses = [];
+    this.pickCondition();
   }
 
   pickCondition() {
@@ -41,10 +46,36 @@ export class Stimuli {
       counter = this.utils.getCounterValue();
       this.utils.incrementCounter(); // TODO: move to the data saving 
     }
-    let condition = CONDITIONS[counter % CONDITIONS.length];
+    this.condition = CONDITIONS[counter % CONDITIONS.length];
     this.conditionIndex = counter % CONDITIONS.length;
-    
+    this.conditionSwitchId = this.utils.pickRandomFromArray(SWITCHES_IDS);
 
+    console.log("condition", this.condition);
+    console.log("condition switch id", this.conditionSwitchId);
+  }
+
+  saveTrial(switches: Map<string, boolean>) {
+    this.trials.push({
+      "timestamp": Date.now(),
+      "switches": {
+        "switch_1": switches.get("switch_1"),
+        "switch_2": switches.get("switch_2"),
+        "switch_3": switches.get("switch_3"),
+        "switch_4": switches.get("switch_4"),
+        "switch_5": switches.get("switch_5"),
+        "switch_6": switches.get("switch_6"),
+      }
+    });
+    console.log("RecordedTrials", this.trials);
+  }
+
+  logGuess(guess: string) {
+    this.guesses.push({
+      "timestamp": Date.now(),
+      "guess": guess,
+      "correct": guess == this.conditionSwitchId
+    });
+    console.log("RecordedGuesses", this.guesses);
   }
 
 

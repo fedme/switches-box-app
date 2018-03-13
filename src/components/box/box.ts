@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BoxProvider } from '../../providers/providers';
+import { BoxProvider, SocketService } from '../../providers/providers';
 
 @Component({
   selector: 'box',
@@ -7,11 +7,9 @@ import { BoxProvider } from '../../providers/providers';
 })
 export class BoxComponent {
 
-  text: string;
-
-  constructor(private box: BoxProvider) {
+  constructor(private box: BoxProvider, private socket: SocketService) {
     console.log('Hello BoxComponent Component');
-    //this.box.getSwitchesVals();
+
   }
 
   getSwitchOnOpacity(switchId: string) {

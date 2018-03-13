@@ -11,12 +11,30 @@ export class BoxProvider {
 
     switches: Map<string, boolean>;
     leds: Map<string, boolean>;
+    connected: boolean;
 
     constructor(private api: Api, private socketService: SocketService, private stimuli: Stimuli) {
         console.log('Hello Box Provider');
 
         this.initializeIO();
         this.socketService.initialize();
+        this.connected = false;
+
+        this.socketService.onConnect().subscribe(() => {
+            this.connected = true;
+            this.stopFlowingLeds();
+            console.log("[Socket] Connected");
+        });
+
+        this.socketService.onDisconnect().subscribe((reason: string) => {
+            this.connected = false;
+            console.log("[Socket] Disconnected", reason);
+        });
+
+        this.socketService.onReconnect().subscribe((attemptNumber: number) => {
+            this.connected = true;
+            console.log("[Socket] Reconnected", attemptNumber);
+        });
 
         this.socketService.onSwitchChanged().subscribe((switchObj) => {
             this.onSwitchChanged(switchObj);
@@ -60,6 +78,11 @@ export class BoxProvider {
     }
 
     onBoxActivated(): void {
+
+        console.log("onBoxActivated()");
+        console.log("box.switches", this.switches)
+        console.log("stimuli.conditionSwitchId", this.stimuli.conditionSwitchId);
+
         if (this.stimuli.condition == "one_working") {
             if (this.switches.get(this.stimuli.conditionSwitchId)) {
                 this.setAllLedsOn();
@@ -68,17 +91,23 @@ export class BoxProvider {
         else if (this.stimuli.condition == "one_not_working") {
 
             // get a list of all switches ids except the condition switch
-            const switches_ids = SWITCHES_IDS;
-            var idx = switches_ids.indexOf(this.stimuli.conditionSwitchId);
+            let switches_ids = SWITCHES_IDS.slice();
+            console.log("switches_ids pre slice", switches_ids)
+            const idx = switches_ids.indexOf(this.stimuli.conditionSwitchId);
             if (idx > -1) {
                 switches_ids.splice(idx, 1);
             }
+            console.log("switches_ids post slice", switches_ids)
 
             // Loop over those switches values
             let switchesCondition: boolean = false;
             for (let switch_id of switches_ids) {
+                console.log("Loop: " + switch_id + " has value", this.switches.get(switch_id));
                 switchesCondition = switchesCondition || this.switches.get(switch_id);
+                console.log("--> switchesCondition updated to:", switchesCondition);
             }
+
+            console.log("switchesCondition after loop", switchesCondition);
 
             if (switchesCondition) {
                 this.setAllLedsOn();
@@ -122,6 +151,10 @@ export class BoxProvider {
 
     stopFlowingLeds(): void {
         this.socketService.emitEvent("stopFlowingLEDs", true);
+    }
+
+    blinkAllLeds(): void {
+        this.socketService.emitEvent("blinkAllLEDs", 2);
     }
 
 }

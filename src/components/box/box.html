@@ -1,6 +1,8 @@
 <!-- Generated template for the BoxComponent component -->
-<div>
-  <object>
+<ion-grid>
+  <ion-row>
+    <ion-col text-center>
+      <object>
     
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 450 385">
 
@@ -140,6 +142,15 @@
    [attr.opacity]="getLEDOnOpacity('LED_3')"/>
   
   </svg>
-  
-  </object>
-</div>
+
+      </object>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col text-center>
+      <button *ngIf="box.connected" ion-button color="secondary" round>connected to box</button>
+      <button *ngIf="!box.connected" ion-button color="danger" round>Disconnected! Please connect to the box WiFi</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

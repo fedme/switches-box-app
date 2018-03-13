@@ -23,8 +23,6 @@ export class RegistrationPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegistrationPage');
 
-    this.box.startFlowingLeds();
-
     if (this.parseUrlParams()) {
       console.log("participant:", this.stimuli.participant);
       this.stimuli.onAfterRegistration();

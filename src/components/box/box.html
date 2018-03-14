@@ -1,7 +1,7 @@
 <!-- Generated template for the BoxComponent component -->
 <ion-grid>
   <ion-row>
-    <ion-col text-center>
+    <ion-col text-center [class.redbg]="!box.connected" [class.greenbg]="box.connected">
       <object>
     
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 450 385">
@@ -18,7 +18,7 @@
     .lightOKOn{fill:#12FF00;}
     .switchOff{fill:#565656;}
     .switchBg0{fill:#DE3737;}
-      .lightOff{fill:#EFEFEF;}
+    .lightOff{fill:#EFEFEF;}
   </style>
   
   <!-- Backgrounds -->
